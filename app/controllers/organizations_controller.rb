@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_admin!, except: [:show]
+  before_action :require_user, except: [:show]
 
   def index
     @organizations = Organization.all
@@ -45,6 +46,16 @@ class OrganizationsController < ApplicationController
 
   def show
     @organization = Organization.find(params[:id])
+  end
+
+  def authenticate_admin!
+    return if current_user.blank?
+    if current_user.admin
+      session[:user_return_to] = request.url
+    else
+      flash[:notice] = "You need admin access for this action"
+      redirect_to root_path
+    end
   end
 
   private
