@@ -1,7 +1,8 @@
-class OrganizationsController < ApplicationController
+class OrganizationsController < ApiController
 
   before_action :authenticate_admin!, except: [:index,:show]
   before_action :authenticate_user!, only: [:edit]
+  before_action :cors_enabled
 
   def index
     @organizations = Organization.all
