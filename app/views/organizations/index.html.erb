@@ -1,0 +1,7 @@
+<p>
+  <%= @organizations.each do |organization| %>
+    <%= organization.title %><br/>
+    <%= organization.name %><br/>
+    <%= link_to "Edit Organization", edit_organization_path(organization) %>
+  <% end %>
+</p>
